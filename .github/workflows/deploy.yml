@@ -1,24 +1,19 @@
-name: Deploy to Cpanel via FTP
-
+name: Publish Website to CPanel
 on:
   push:
     branches:
-      - main  # Ganti dengan nama branch utama Anda
-
+      - main
 jobs:
-  deploy:
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.2.0
-        with:
-          ftp-server: ${{ secrets.FTP_SERVER }}
-          ftp-username: ${{ secrets.FTP_USERNAME }}
-          ftp-password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./  # Direktori lokal yang akan di-upload
-          git-ftp-args: --insecure  # Optional, jika Anda menggunakan FTP yang tidak menggunakan SSL
-          exclude: ".git,.github"  # Direktori atau file yang akan dikecualikan
+    - uses: actions/checkout@v2.1.0
+      with:
+        fetch-depth: 2
+    - name: FTP-Deploy-Action
+      uses: SamKirkland/FTP-Deploy-Action@3.1.1
+      with:
+        ftp-server: ${{ secrets. FTP_SERVER }}
+        ftp-username: ${{ secrets.FTP_USERNAME }}
+        ftp-password: ${{ secrets. FTP_PASSWORD }}
